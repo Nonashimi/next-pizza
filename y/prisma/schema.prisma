@@ -15,6 +15,7 @@ model User{
     email    String @unique
     password String 
     role UserRole @default(USER)
+    verified DateTime 
 
     provider String?
     providerId String?
@@ -52,7 +53,7 @@ model Product{
 
     ingredients Ingredient[]
 
-    variance ProdcutItem[]
+    variance ProductItem[]
 
 
     createdAt DateTime @default(now())
@@ -60,7 +61,7 @@ model Product{
 }
 
 
-model ProdcutItem {
+model ProductItem {
     id Int @id @default(autoincrement())
 
     cartItems CartItem[]
@@ -96,7 +97,7 @@ model Cart {
 model CartItem {
     id Int @id @default(autoincrement())
 
-    productItem ProdcutItem @relation(fields: [productItemId], references: [id])
+    productItem ProductItem @relation(fields: [productItemId], references: [id])
     productItemId Int
 
 
@@ -128,7 +129,7 @@ model Ingredient{
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
-
+ 
 
 model VerificationCode{
     id Int @id @default(autoincrement())
