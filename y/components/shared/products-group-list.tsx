@@ -47,7 +47,7 @@ function ProductsGroupList(
                 id = {item.id}
                 name = {item.name}
                 imageUrl={item.imageUrl}
-                price = {item.items[0].price}
+                price = {item.variance[0].price}
                 />
             )}
         </div>
