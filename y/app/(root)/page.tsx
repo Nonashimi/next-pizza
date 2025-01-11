@@ -1,10 +1,10 @@
 import Container from "@/components/shared/container";
 import Filters from "@/components/shared/filters";
-import ProductCard from "@/components/shared/product-card";
 import ProductsGroupList from "@/components/shared/products-group-list";
 import { Title } from "@/components/shared/title";
 import TopBar from "@/components/shared/top-bar";
 import { prisma } from "@/prisma/prisma-client";
+import Link from "next/link";
 
 export default async function Home() {
 
@@ -24,7 +24,7 @@ export default async function Home() {
       <Container className="mt-10">
         <Title text = "Все пиццы" size="lg" className="font-extrabold"/>
       </Container>
-      <TopBar/>
+      <TopBar categories={categories.filter((category) => category.products.length > 0)}/>
       <Container className="mt-10">
         <div className="flex gap-[80px]">
             <div className="w-[250px]">
