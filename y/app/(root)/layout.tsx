@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Header from "@/components/shared/header";
+import Header from "@/shared/components/shared/header";
 
 
 export const metadata: Metadata = {
@@ -8,16 +8,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode,
+  modal: React.ReactNode,
 }>) {
   return (
-    <div className="">
-         <Header/>
          <main className="min-h-screen">
-          {children}
+            <Header/>
+            {children}
+            {modal}
          </main>
-
-    </div>
   );
 }
