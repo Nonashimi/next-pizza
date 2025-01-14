@@ -5,6 +5,7 @@ import { Title } from "@/shared/components/shared/title";
 import TopBar from "@/shared/components/shared/top-bar";
 import { prisma } from "@/prisma/prisma-client";
 import Link from "next/link";
+import { useEffect } from "react";
 
 export default async function Home() {
 
@@ -18,7 +19,7 @@ export default async function Home() {
       }
     }
   });
-  
+
   return (
     <>
       <Container className="mt-10">

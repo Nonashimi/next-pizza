@@ -1,9 +1,9 @@
-import { cn } from '@/shared/lib/utils'
-import React, { FC, PropsWithChildren } from 'react'
+"use client"
+
+import React, { FC, PropsWithChildren, useEffect, useState } from 'react'
 
 import {
     Sheet,
-    SheetClose,
     SheetContent,
     SheetFooter,
     SheetHeader,
@@ -13,6 +13,10 @@ import {
 import Link from 'next/link';
 import { Button } from '../ui';
 import { ArrowRight } from 'lucide-react';
+import CartDrawerItem from './cart-drawer-item';
+import { getCartItemDetails } from '@/shared/lib/get-cart-item-details';
+import { useCartStore } from '@/shared/store/cart';
+import { PizzaSize, PizzaType } from '@/shared/constants/pizza';
 
 type Props = {
     className?: string,
@@ -21,7 +25,22 @@ type Props = {
 
 export const  CartDrawer:FC<PropsWithChildren<Props>> = 
     ({children, className}: Props) => {
-    const totalAmount = 200;
+    const [totalAmount, fetchCartItems, updateCartItemQuantity, items] = useCartStore(state => 
+      [ state.totalAmount, 
+        state.fetchCartItems,
+        state.updateCartItemQuantity,
+        state.items
+      ]);
+
+      useEffect(() => {
+        fetchCartItems();
+      },[]);
+
+
+      const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
+           const newQuantity = type == "plus" ? quantity + 1 : (quantity -1);
+          updateCartItemQuantity(id, newQuantity);
+      }
   return (
     <Sheet>
         <SheetTrigger asChild>{children}</SheetTrigger>
@@ -32,7 +51,27 @@ export const  CartDrawer:FC<PropsWithChildren<Props>> =
                 </SheetTitle>
             </SheetHeader>
 
-            {/* Items */}
+            {}
+            <div className="-mx-6 mt-5 overflow-auto  flex-1">
+              <div className="mb-2">
+                {
+                  items.map((item) => 
+                  <CartDrawerItem
+                    className=''
+                    name = {item.name}
+                    quantity={item.quantity}
+                    price = {item.price}
+                    id = {item.id}
+                    details={getCartItemDetails(item.pizzaType as PizzaType, item.pizzaSize as PizzaSize, item.ingredients )}
+                    imageUrl={item.imageUrl}
+                    onCLickUpdateQuantity={(type) => onClickCountButton(item.id, item.quantity, type)}
+                 />
+
+                  )
+                }
+              </div>
+            </div>
+
 
             <SheetFooter className="-mx-6 bg-white p-8">
                 <div className="w-full">

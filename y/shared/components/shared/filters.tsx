@@ -8,6 +8,7 @@ import CheckboxFilterGroup from './checkbox-filter-group'
 import { useFIlters } from '@/shared/hooks/use-filters'
 import { useIngredients } from '@/shared/hooks/use-ingredients'
 import { useQueryFilters } from '@/shared/hooks/use-query-filter'
+import { cookies } from 'next/headers'
 
 type Props = {}
 
@@ -20,6 +21,8 @@ function Filters({}: Props) {
   const items = ingredients.map((item) => ({ value: String(item.id), text: item.name }));
 
   useQueryFilters(filters);
+
+
   return (
     <div className=''>
         <Title text = "Фильтрация" size = "sm" className='mb-5 font-bold'/>

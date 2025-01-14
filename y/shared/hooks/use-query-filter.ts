@@ -32,7 +32,6 @@ export const useQueryFilters = (filters: PropsFilter) => {
         scroll: false,
       });
 
-      console.log(filters, 999);
     }
 
     isMounted.current = true;
