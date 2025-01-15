@@ -8,7 +8,9 @@ interface Props  {
     imageUrl: string,
     name: string,
     className?: string,
-    onCLickAdd?: VoidFunction,
+    price: number,
+    onCLickAdd?: () => void,
+    loading?: boolean
 }
 
 const ChooseeProductForm = ({
@@ -16,9 +18,10 @@ const ChooseeProductForm = ({
     imageUrl, 
     name, 
     onCLickAdd, 
+    price,
+    loading
     }: Props) => {
-        const textDetails = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos, cum?';
-        const totalPrice = 350;
+       
   return (
     <div className={cn(className, 'flex flex-1')}>
         <div className="flex items-center justify-center flex-1 relative w-full">
@@ -31,11 +34,11 @@ const ChooseeProductForm = ({
         <div className="w-[490px] bg-[#f7f6f5] p-7">
             <Title text={name} size='md' className={'font-extrabold mb-1'}/>
 
-            <p className='text-gray-400'>{textDetails}</p>
             <Button
+                loading = {loading}
+                onClick={onCLickAdd}
                 className = "h-[55px] px-10 text-base rounded-[18px] w-full mt-10">
-
-                Добавить в корзину за {totalPrice} P
+                    Добавить в корзину за {price} P
             </Button>
         </div>
     </div>

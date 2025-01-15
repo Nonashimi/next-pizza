@@ -10,6 +10,7 @@ import { useCartStore } from '@/shared/store/cart'
 
 interface Props extends CartItemProps{
     onCLickUpdateQuantity?: (type: "plus" | 'minus') => void;
+    onCLickDeleteButton?: () => void
     className?: string
 }
 
@@ -22,7 +23,8 @@ function CartDrawerItem({
   price,
   disabled,
   id,
-  onCLickUpdateQuantity
+  onCLickUpdateQuantity,
+  onCLickDeleteButton
 
 }: Props) {
 
@@ -39,7 +41,7 @@ function CartDrawerItem({
               <CountButton onClick={onCLickUpdateQuantity} value={quantity}/>
                 <div className="flex items-center gap-3">
                     <CartItem.Price value={price}/>
-                    <Trash2Icon className='text-gray-400 cursor-pointer hover:text-gray-600' size = {16}/>
+                    <Trash2Icon onClick={onCLickDeleteButton}  className='text-gray-400 cursor-pointer hover:text-gray-600' size = {16}/>
                 </div>
           </div>
         </div>
