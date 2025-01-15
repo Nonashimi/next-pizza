@@ -25,11 +25,12 @@ type Props = {
 
 export const  CartDrawer:FC<PropsWithChildren<Props>> = 
     ({children, className}: Props) => {
-    const [totalAmount, fetchCartItems, updateCartItemQuantity, items] = useCartStore(state => 
+    const [totalAmount, fetchCartItems, updateCartItemQuantity, items, deleteItemFromCart] = useCartStore(state => 
       [ state.totalAmount, 
         state.fetchCartItems,
         state.updateCartItemQuantity,
-        state.items
+        state.items,
+        state.deleteItemFromCart
       ]);
 
       useEffect(() => {
@@ -40,6 +41,10 @@ export const  CartDrawer:FC<PropsWithChildren<Props>> =
       const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
            const newQuantity = type == "plus" ? quantity + 1 : (quantity -1);
           updateCartItemQuantity(id, newQuantity);
+      }
+
+      const onCLickTrashButton = (id: number) => {
+        deleteItemFromCart(id);
       }
   return (
     <Sheet>
@@ -53,11 +58,10 @@ export const  CartDrawer:FC<PropsWithChildren<Props>> =
 
             {}
             <div className="-mx-6 mt-5 overflow-auto  flex-1">
-              <div className="mb-2">
                 {
                   items.map((item) => 
                   <CartDrawerItem
-                    className=''
+                    className='mb-2'
                     name = {item.name}
                     quantity={item.quantity}
                     price = {item.price}
@@ -65,11 +69,11 @@ export const  CartDrawer:FC<PropsWithChildren<Props>> =
                     details={getCartItemDetails(item.pizzaType as PizzaType, item.pizzaSize as PizzaSize, item.ingredients )}
                     imageUrl={item.imageUrl}
                     onCLickUpdateQuantity={(type) => onClickCountButton(item.id, item.quantity, type)}
+                    onCLickDeleteButton = {() => onCLickTrashButton(item.id)}
                  />
 
                   )
                 }
-              </div>
             </div>
 
 

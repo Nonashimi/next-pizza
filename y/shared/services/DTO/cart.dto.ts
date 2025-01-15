@@ -11,3 +11,11 @@ export type CartItemDTO = CartItem & {
     items: CartItemDTO[];
   }
   
+
+
+
+export interface CreateCartItemValues {
+    productItemId: number;
+    ingredients?: number[];
+  }
+  

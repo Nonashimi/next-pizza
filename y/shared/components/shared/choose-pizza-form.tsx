@@ -14,9 +14,10 @@ interface Props  {
     imageUrl: string,
     name: string,
     className?: string,
-    onCLickAdd?: VoidFunction,
+    onCLickAdd: (itemId:number, ingredients: number[]) => void,
     ingredients: Ingredient[],
-    items: ProductItem[]
+    items: ProductItem[],
+    loading?: boolean
 }
 
 const ChoosePizzaForm = ({
@@ -24,23 +25,18 @@ const ChoosePizzaForm = ({
     imageUrl, 
     name, 
     onCLickAdd, 
-    ingredients, 
-    items}: Props) => {
+    ingredients,
+    loading ,
+    items
+    }: Props) => {
 
 
-        const {size, type, setSize, setType, selectedIngredients, addIngredient, availableSizes: availablePizzaSizes} = usePizzaOptions(items);
+        const {size, type, setSize, setType, selectedIngredients, addIngredient, availableSizes: availablePizzaSizes, currentItemId} = usePizzaOptions(items);
         const {textDetails, totalPrice} = getPizzaDetails(size, type, items, ingredients, selectedIngredients);
-
-        const handleCLick = () => {
-            const product =  {
-                size,
-                type,
-                selectedIngredients
-            }
-
-            console.log(product);
+        const handleCLickAdd = () => {
+            if(currentItemId)
+            onCLickAdd(currentItemId, Array.from(selectedIngredients));
         }
-         
   return (
     <div className={cn(className, 'flex flex-1')}>
         <PizzaImage size={size} src={imageUrl}/>
@@ -77,10 +73,10 @@ const ChoosePizzaForm = ({
             </div>
            
             <Button
-                onClick={() => handleCLick()}
+                loading = {loading}
+                onClick={handleCLickAdd}
                 className = "h-[55px] px-10 text-base rounded-[18px] w-full mt-10">
-
-                Добавить в корзину за {totalPrice} P
+                    Добавить в корзину за {totalPrice} P
             </Button>
         </div>
     </div>

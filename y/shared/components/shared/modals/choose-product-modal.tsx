@@ -10,6 +10,8 @@ import ChooseeProductForm from '../choose-product-form'
 import { ProductWithRelations } from '@/@types/prisma'
 import PizzaImage from '../pizza-image'
 import ChoosePizzaForm from '../choose-pizza-form'
+import { useCartStore } from '@/shared/store/cart'
+import toast from 'react-hot-toast'
 
 type Props = {
     product: ProductWithRelations
@@ -19,7 +21,30 @@ type Props = {
 
 function ChooseProductModal({className, product}: Props) {
       const router = useRouter();
-      const isPizzaForm = Boolean(product.variance[0].pizzaType)
+      const firstItem = product.variance[0];
+      const isPizzaForm = Boolean(firstItem.pizzaType)
+      const [addCartItem, loading] = useCartStore(state => [state.addCartItem, state.loading]);
+
+
+
+      const onAddItemToCart = async (productItemId: number, ingredients?: number[]) => {
+        try {
+          await addCartItem({
+            productItemId,
+            ...(ingredients && { ingredients }), 
+          });
+      
+          toast.success(
+             product.name + " добавлен в корзину"
+          );
+          router.back();
+        } catch (e) {
+          toast.error(
+               `Не удалось добавить ${product.name} в корзину`
+          );
+        }
+      };
+      
 
   return (
     <Dialog open = {Boolean(product)} onOpenChange={() => router.back()}>
@@ -28,9 +53,22 @@ function ChooseProductModal({className, product}: Props) {
           className,
         )}>
           {isPizzaForm ?
-           <ChoosePizzaForm imageUrl={product.imageUrl} name={product.name} ingredients={product.ingredients} items={product.variance}/>
+           <ChoosePizzaForm 
+              onCLickAdd={onAddItemToCart} 
+              imageUrl={product.imageUrl} 
+              name={product.name} 
+              ingredients={product.ingredients} 
+              items={product.variance}
+              loading={loading}
+              />
             : 
-           <ChooseeProductForm imageUrl={product.imageUrl} name={product.name}/>
+           <ChooseeProductForm 
+              price={firstItem.price} 
+              onCLickAdd={() => onAddItemToCart(firstItem.id)} 
+              imageUrl={product.imageUrl} 
+              name={product.name}
+              loading={loading}
+              />
           }
         </DialogContent>
     </Dialog>

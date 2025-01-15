@@ -6,10 +6,13 @@ import { cn } from '@/shared/lib/utils'
 import {useIntersection} from "react-use"
 import ProductCard from './product-card'
 import { useCategoryState } from '@/shared/store/category'
+import { products } from '@/prisma/constants'
+import { Product } from '@prisma/client'
+import { ProductWithRelations } from '@/@types/prisma'
 
 type Props = {
     title: string,
-    items: any[],
+    items: ProductWithRelations[],
     className?: string,
     listClassName?: string,
     categoryId: number
@@ -48,6 +51,7 @@ function ProductsGroupList(
                 name = {item.name}
                 imageUrl={item.imageUrl}
                 price = {item.variance[0].price}
+                ingredients = {item.ingredients}
                 />
             )}
         </div>

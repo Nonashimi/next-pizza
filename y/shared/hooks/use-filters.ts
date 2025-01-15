@@ -1,6 +1,6 @@
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useSet } from "react-use";
 import { PropsFilter } from "./use-query-filter";
 
@@ -51,17 +51,18 @@ interface PriceProps{
 
 
 
-      return {
-        togleSizes, 
-        togglePizzaTypes, 
-        updatePrice, 
-        sizes, 
-        selectedIngredients, 
-        pizzaTypes, 
-        price, 
-        filters, 
-        router, 
-        toggleIngredients, 
-        setPrice
-    };
+      return useMemo(
+        () => ({
+          togleSizes, 
+          togglePizzaTypes, 
+          updatePrice, 
+          sizes, 
+          selectedIngredients, 
+          pizzaTypes, 
+          price, 
+          filters, 
+          router, 
+          toggleIngredients, 
+          setPrice
+        }),[sizes, pizzaTypes, selectedIngredients, price]);
   }
