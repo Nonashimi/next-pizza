@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { Api } from '../services/api-client';
 import { CartStateItem, getCartDetails } from '../lib/get-cart-details';
 import { CreateCartItemValues } from '../services/DTO/cart.dto';
+import { stat } from 'fs';
 
 export interface CartState {
   loading: boolean;
@@ -59,7 +60,7 @@ export const useCartStore = create<CartState>((set) => ({
     }
   },
   deleteItemFromCart: async (id: number) => {
-    set({ loading: true, error: false });
+    set(state => ({loading: true, error: false, items: state.items.map((item) => (item.id === id ? {...item, disabled: true}: item))}));
 
     try {
       const data = await Api.cart.DeleteItemFromCart(id);
@@ -72,7 +73,7 @@ export const useCartStore = create<CartState>((set) => ({
       console.error(error);
       set({ error: true });
     } finally {
-      set({ loading: false });
+      set(state =>({ loading: false, items: state.items.map(item => ({...item, disabled: false})) }));
     }
   },
   addCartItem: async (values: CreateCartItemValues) =>  {

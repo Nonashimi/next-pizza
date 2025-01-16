@@ -1,47 +1,39 @@
+
 import Container from '@/shared/components/shared/container';
-import GroupVariance from '@/shared/components/shared/group-variance';
-import ProductImage from '@/shared/components/shared/pizza-image';
-import { Title } from '@/shared/components/shared/title';
 import { prisma } from '@/prisma/prisma-client'
 import { notFound } from 'next/navigation';
 import React from 'react'
+import ChooseForm from '@/shared/components/shared/choose-form';
 
 type Props = {
     params: {id: string}
 }
 
-async  function page({params}: Props) {
-  const product = await prisma.product.findFirst({where: {id: Number(params.id)}});
+async function page({params}: Props) {
+  const product = await prisma.product.findFirst({
+    where: {id: Number(params.id)}, 
+    include: {
+       ingredients: true,
+       category: {
+          include: {
+            products: {
+              include: {
+                variance: true
+              }
+            }
+          }
+       },
+       variance: true,
+    }});
 
   if(!product){
     return notFound();
   }
 
+  
   return (
     <Container className = {"flex flex-col my-10"}>
-      <div className="flex flex-1">
-        <ProductImage src = {product.imageUrl} alt = {product.name} className = "" size = {30}/>
-        <div className="w-[490px] bg-[#f7f6f5] p-7">
-          <Title text={product.name} size='md' className='font-extrabold mb-1'/>
-          <p className='text-gray-400'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente accusamus laborum voluptatum velit tempora. Blanditiis tempore ex voluptas nostrum repellendus?</p>
-          <GroupVariance
-           value='1'
-           
-            items = {[{
-            name: 'Маленькая',
-            value: '1',
-            },
-            {
-              name: 'Средняя',
-              value: '2',
-            },
-            {
-              name: 'Большая',
-              value: '3',
-            }
-            ]}/>
-        </div>
-      </div>
+      <ChooseForm product={product}/>
     </Container>
   )
 }

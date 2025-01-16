@@ -8,11 +8,15 @@ import { User } from 'lucide-react'
 import Link from 'next/link'
 import SeacrhInput from './search-input'
 import CartButton from './cart-button'
-type Props = {}
+type Props = {
+    hasSearch?: boolean,
+    className?: string,
+    hasCart?: boolean,
+}
 
-function Header({}: Props) {
+function Header({className, hasSearch = true, hasCart = true}: Props) {
   return (
-    <header className={cn('border border-b')}>
+    <header className={cn('border border-b', className)}>
         <Container className='flex items-center justify-between py-8 '>
             <Link href={"/"}>
                 <div className="flex items-center gap-4">
@@ -23,15 +27,21 @@ function Header({}: Props) {
                     </div>
                 </div>
             </Link>
-            <div className="mx-10 flex-1">
-                <SeacrhInput/>
-            </div>
+            {
+                hasSearch && 
+                <div className="mx-10 flex-1">
+                    <SeacrhInput/>
+                </div>
+            }
             <div className="flex  gap-4">
                 <Button variant={"outline"} className='flex items-center gap-1'>
                     <User size={16}/>
                     Войти
                 </Button>
-                <CartButton className='group relative'/>
+                {hasCart && 
+                     <CartButton className='group relative'/>
+
+                }
             </div>
         </Container>
     </header>
