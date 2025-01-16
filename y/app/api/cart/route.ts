@@ -6,6 +6,7 @@ import { findOrCreate } from '@/shared/lib/find-or-create-cart';
 import { CartDTO, CreateCartItemValues } from '@/shared/services/DTO/cart.dto';
 import IngredientCard from '@/shared/components/shared/ingredient-card';
 import { updateCartTotalAmount } from '@/shared/lib/update-cart-total-amout';
+import { useCheckCartIsExist } from '@/shared/hooks/use-check-cart-exist';
 export async function GET(req: NextRequest) {
   try {
     const token = req.cookies.get("token")?.value;
@@ -58,21 +59,15 @@ export async function POST(req: NextRequest) {
         const userCart = await findOrCreate(token);
 
         const data = (await req.json()) as CreateCartItemValues;
-        const cartItem = await prisma.cartItem.findFirst({
-            where: {
-                cartId: userCart.id,
-                productItemId: data.productItemId,
-                ingredients: {every: {id: {in : data.ingredients}}},
-            }
-        });
+        const {isExist, detailsItem} = await useCheckCartIsExist(userCart.id, data).then(r => r);
 
-        if(cartItem){
+        if(isExist){
             await prisma.cartItem.update({
                 where: {
-                    id: cartItem.id
+                    id: detailsItem.id
                 },
                 data: {
-                    quantity: cartItem.quantity + 1,
+                    quantity: detailsItem.quantity + 1,
                 }
             })
         }else{
