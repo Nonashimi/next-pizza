@@ -16,12 +16,12 @@ import { Button } from '../ui';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import CartDrawerItem from './cart-drawer-item';
 import { getCartItemDetails } from '@/shared/lib/get-cart-item-details';
-import { useCartStore } from '@/shared/store/cart';
 import { PizzaSize, PizzaType } from '@/shared/constants/pizza';
 import Image from "next/image";
 import EmptyCart from "@/public/images/empty-box.png";
 import { Title } from './title';
 import { cn } from '@/shared/lib/utils';
+import { onClickCountButton, useCart } from '@/shared/hooks/use-cart';
 type Props = {
     className?: string,
     children: React.ReactNode
@@ -29,24 +29,8 @@ type Props = {
 
 export const  CartDrawer:FC<PropsWithChildren<Props>> = 
     ({children, className}: Props) => {
-    const [totalAmount, fetchCartItems, updateCartItemQuantity, items, deleteItemFromCart, loading] = useCartStore(state => 
-      [ state.totalAmount, 
-        state.fetchCartItems,
-        state.updateCartItemQuantity,
-        state.items,
-        state.deleteItemFromCart,
-        state.loading
-      ]);
-
-      useEffect(() => {
-        fetchCartItems();
-      },[]);
-
-
-      const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
-           const newQuantity = type == "plus" ? quantity + 1 : (quantity -1);
-          updateCartItemQuantity(id, newQuantity);
-      }
+      const {totalAmount, updateCartItemQuantity, deleteItemFromCart, loading, items} = useCart();
+     const [redirectind, setRedirecting] = useState(false);
 
       const onCLickTrashButton = (id: number) => {
         deleteItemFromCart(id);
@@ -73,10 +57,10 @@ export const  CartDrawer:FC<PropsWithChildren<Props>> =
                 quantity={item.quantity}
                 price = {item.price}
                 id = {item.id}
-                details={getCartItemDetails(item.pizzaType as PizzaType, item.pizzaSize as PizzaSize, item.ingredients )}
+                details={getCartItemDetails( item.ingredients, item.pizzaType as PizzaType, item.pizzaSize as PizzaSize,)}
                 imageUrl={item.imageUrl}
                 disabled = {item.disabled}
-                onCLickUpdateQuantity={(type) => onClickCountButton(item.id, item.quantity, type)}
+                onCLickUpdateQuantity={(type) => onClickCountButton(item.id, item.quantity, type, updateCartItemQuantity)}
                 onCLickDeleteButton = {() => onCLickTrashButton(item.id)}
              />
 

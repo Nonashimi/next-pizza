@@ -1,22 +1,52 @@
+"use client"
+
+import { CheckoutItem } from '@/shared/components/shared/checkout-item'
 import { CheckoutItemDetails } from '@/shared/components/shared/checkout-item-details'
+import CheckoutTotalPriceSide from '@/shared/components/shared/checkout-total-price-side'
 import Container from '@/shared/components/shared/container'
 import { Title } from '@/shared/components/shared/title'
 import WhiteBlock from '@/shared/components/shared/white-block'
 import { Button, Input, Skeleton } from '@/shared/components/ui'
 import { Textarea } from '@/shared/components/ui/textarea'
+import { PizzaSize, PizzaType } from '@/shared/constants/pizza'
+import { onClickCountButton, useCart } from '@/shared/hooks/use-cart'
+import { getCartItemDetails } from '@/shared/lib/get-cart-item-details'
 import { ArrowRight, Package, Percent, Truck } from 'lucide-react'
 import React from 'react'
 
 type Props = {}
 
+
 function page({}: Props) {
-  const loading = false;
-  return (
+  const {totalAmount,updateCartItemQuantity ,deleteItemFromCart , loading, items} = useCart();
+ return (
     <Container className='mt-10'>
         <Title text='Оформление заказа' className='font-extrabold mb-8 text-[36px]'/>
         <div className="flex gap-10">
           <div className="flex flex-col gap-10 flex-1 mb-20">
-              <WhiteBlock title = "1.Корзина">123</WhiteBlock>
+              <WhiteBlock title = "1.Корзина">
+                <div className="flex flex-col gap-6">
+
+                  {items.map(item => 
+                    <CheckoutItem
+                      key={item.id}
+                      id={item.id}
+                      imageUrl={item.imageUrl}
+                      details = {getCartItemDetails(
+                        item.ingredients,
+                        item.pizzaType as PizzaType,
+                        item.pizzaSize as PizzaSize,
+                      )}
+                      name={item.name}
+                      price={item.price}
+                      quantity={item.quantity}
+                      disabled={item.disabled}
+                      onClickCountButton={(type) => onClickCountButton(item.id, item.quantity, type, updateCartItemQuantity)}
+                      onClickRemove={() => deleteItemFromCart(item.id)}
+                    />
+                  )}
+                </div>
+              </WhiteBlock>
               <WhiteBlock title = "2. Персональные данные">
                   <div className="grid grid-cols-2 gap-5">
                       <Input name="firstName" className="text-base" placeholder="Имя" />
@@ -36,48 +66,7 @@ function page({}: Props) {
                 </div>
               </WhiteBlock>
           </div>
-          <div className="w-[450px]">
-            <WhiteBlock className='p-6 sticky top-4'>
-              <div className="flex flex-col gap-1">
-                <span className='text-xl'>Итого:</span>
-                <span className='text-[34px] font-extrabold'>2000 p</span>
-              </div>
-              <CheckoutItemDetails
-                title={
-                  <div className="flex items-center">
-                    <Package size={18} className="mr-2 text-gray-400" />
-                    Стоимость корзины:
-                  </div>
-                }
-                value={`${2000} ₽`}
-              />
-              <CheckoutItemDetails
-                title={
-                  <div className="flex items-center">
-                    <Percent size={18} className="mr-2 text-gray-400" />
-                    Налоги:
-                  </div>
-                }
-                value={loading ? <Skeleton className="h-6 w-16 rounded-[6px]" /> : `${200} ₽`}
-              />
-              <CheckoutItemDetails
-                title={
-                  <div className="flex items-center">
-                    <Truck size={18} className="mr-2 text-gray-400" />
-                    Доставка:
-                  </div>
-                }
-                value={loading ? <Skeleton className="h-6 w-16 rounded-[6px]" /> : `${300} ₽`}
-              />
-              <Button
-                loading={loading}
-                type="submit"
-                className="w-full h-14 rounded-2xl mt-6 text-base font-bold">
-                Перейти к оплате
-                <ArrowRight className="w-5 ml-2" />
-              </Button>
-            </WhiteBlock>
-          </div>
+          <CheckoutTotalPriceSide loading = {loading} totalAmount={totalAmount}/>
         </div>
 
     </Container>
