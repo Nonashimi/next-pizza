@@ -7,7 +7,7 @@ const nunito = Nunito({
   weight: ['400', '500', '600', '700', '800', '900'],
 });
 
-
+// добавить валюту
 export default function Layout({
   children,
 }: Readonly<{
