@@ -22,7 +22,7 @@ function CheckoutTotalPriceSide({loading, totalAmount}: Props) {
     <WhiteBlock className='p-6 sticky top-4'>
       <div className="flex flex-col gap-1">
         <span className='text-xl'>Итого:</span>
-        <span className='text-[34px] font-extrabold'>{loading ? <Skeleton className="h-6 w-16 rounded-[6px]" /> : `${TotalPrice} ₽`}</span>
+        <span className='h-11 text-[34px] font-extrabold'>{loading ? <Skeleton className="h-11 w-24 rounded-[10px]" /> : `${TotalPrice} ₽`}</span>
       </div>
       <CheckoutItemDetails
         title={

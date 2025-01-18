@@ -6,11 +6,14 @@ import { FormTextarea } from '../form-components/form-textarea'
 import { AddressInput } from '../address-input'
 import { Controller, useFormContext } from 'react-hook-form'
 
-type Props = {}
+type Props = {
+  className?: string
+}
 
-function AddressForm({}: Props) {
+function AddressForm({className}: Props) {
     const { control } = useFormContext();
   return (
+    <div className={className}>
     <WhiteBlock title='3. Адрес доставки'>
         <div className="flex flex-col gap-5">
         <Controller
@@ -31,6 +34,7 @@ function AddressForm({}: Props) {
         </div>
         
     </WhiteBlock>
+    </div>
   )
 }
 

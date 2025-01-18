@@ -10,12 +10,16 @@ import InCart from "@/shared/components/shared/checkout/in-cart";
 import PersonalDatas from "@/shared/components/shared/checkout/personal-datas";
 import AddressForm from "@/shared/components/shared/checkout/address-form";
 import { checkoutFormSchema, CheckoutFormValues } from "@/shared/constants/checkout-form-schema";
+import { createOrder } from "@/app/actions";
+import toast from "react-hot-toast";
+import { useState } from "react";
 
 type Props = {}
 
 
 function page({}: Props) {
   const {totalAmount,updateCartItemQuantity ,deleteItemFromCart , loading, items} = useCart();
+  const [submitting, setSubmitting] = useState(false);
 
   const form = useForm({
     resolver: zodResolver(checkoutFormSchema),
@@ -30,8 +34,24 @@ function page({}: Props) {
   });
 
 
-  const onSubmit: SubmitHandler<CheckoutFormValues> = (data ) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<CheckoutFormValues> = async(data: CheckoutFormValues ) => {
+      try{
+        setSubmitting(true);
+        const url = await createOrder(data);
+        toast.success("Заказ успешно оформлен Переход на оплату ...");
+
+        if(url){
+          location.href = url;
+        }
+
+      }catch(error){
+        console.error(error);
+        toast.error("не удалось создать заказ", {
+          icon: ""
+        })
+      }finally{
+        setSubmitting(false);
+      }
   }
 
  return (
@@ -39,17 +59,20 @@ function page({}: Props) {
         <Title text='Оформление заказа' className='font-extrabold mb-8 text-[36px]'/>
         <FormProvider {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
+            {/* {"left side"} */}
             <div className="flex gap-10">
               <div className="flex flex-col gap-10 flex-1 mb-20">
                   <InCart 
                     items={items} 
                     updateCartItemQuantity={updateCartItemQuantity}
                     DeleteItemFromCart = {deleteItemFromCart}
+                    loading = {loading}
                   />
-                  <PersonalDatas/>
-                  <AddressForm/>
+                  <PersonalDatas className = {loading ? "pointer-events-none opacity-40" : ""}/>
+                  <AddressForm className = {loading ? "pointer-events-none opacity-40" : ""}/>
               </div>
-              <CheckoutTotalPriceSide loading = {loading} totalAmount={totalAmount}/>
+              {/* {"right side"} */}
+              <CheckoutTotalPriceSide loading = {loading || submitting} totalAmount={totalAmount}/>
             </div>
           </form>
         </FormProvider>
