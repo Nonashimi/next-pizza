@@ -8,6 +8,7 @@ const nunito = Nunito({
 });
 
 // добавить валюту
+// перенести дата базу в  докер локальный постгре 
 export default function Layout({
   children,
 }: Readonly<{
