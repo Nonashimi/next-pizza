@@ -49,7 +49,7 @@ function CheckoutTotalPriceSide({loading, totalAmount}: Props) {
             Доставка:
           </div>
         }
-        value={loading ? <Skeleton className="h-6 w-16 rounded-[6px]" /> : `${DELIVERY_PRICE} ₽`}
+        value={loading ? <Skeleton className="h-6 w-16 rounded-[6px]" /> : `${totalAmount > 0 ?DELIVERY_PRICE : 0} ₽`}
       />
       <Button
         loading={loading}
