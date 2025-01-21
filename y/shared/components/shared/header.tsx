@@ -1,7 +1,7 @@
 "use client"
 
 import { cn } from '@/shared/lib/utils'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Container from './container'
 import Image from 'next/image'
 import logo from "@/public/logo.png"
@@ -12,6 +12,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import toast from 'react-hot-toast'
 import { useSession, signIn } from 'next-auth/react'
 import ProfileButton from './profile-button'
+import { AuthModal } from './modals/auth-modals'
 type Props = {
     hasSearch?: boolean,
     className?: string,
@@ -20,7 +21,7 @@ type Props = {
 
 function Header({className, hasSearch = true, hasCart = true}: Props) {
     const searchParams = useSearchParams();
-
+    const [isModelOpen, setIsModelOpen] = useState(false);
     
     const router = useRouter();
     useEffect(() => {
@@ -51,7 +52,8 @@ function Header({className, hasSearch = true, hasCart = true}: Props) {
                 </div>
             }
             <div className="flex  gap-4">
-               <ProfileButton/>
+                <AuthModal open = {isModelOpen} onCLose={() => setIsModelOpen(false)}/>
+               <ProfileButton onClickSignIn={() => setIsModelOpen(true)}/>
                 {hasCart && 
                      <CartButton className='group relative'/>
 

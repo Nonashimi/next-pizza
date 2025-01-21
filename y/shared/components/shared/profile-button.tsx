@@ -23,11 +23,11 @@ function ProfileButton({onClickSignIn}: Props) {
             </Button>
             :
             <Link href="/profile">
-            <Button variant="secondary" className="flex items-center gap-2">
-              <CircleUserIcon size={18}/>
-              Профиль
-            </Button>
-          </Link>
+                <Button variant="secondary" className="flex items-center gap-2">
+                    <CircleUserIcon size={18}/>
+                    Профиль
+                </Button>
+            </Link>
         }
     </div>
   )
