@@ -55,6 +55,7 @@ function page({}: Props) {
   }
 
  return (
+
     <Container className='mt-10'>
         <Title text='Оформление заказа' className='font-extrabold mb-8 text-[36px]'/>
         <FormProvider {...form}>

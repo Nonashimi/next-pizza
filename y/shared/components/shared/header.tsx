@@ -1,13 +1,17 @@
+"use client"
+
 import { cn } from '@/shared/lib/utils'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Container from './container'
 import Image from 'next/image'
 import logo from "@/public/logo.png"
-import { Button } from '../ui'
-import { User } from 'lucide-react'
 import Link from 'next/link'
 import SeacrhInput from './search-input'
 import CartButton from './cart-button'
+import { useRouter, useSearchParams } from 'next/navigation'
+import toast from 'react-hot-toast'
+import { useSession, signIn } from 'next-auth/react'
+import ProfileButton from './profile-button'
 type Props = {
     hasSearch?: boolean,
     className?: string,
@@ -15,6 +19,19 @@ type Props = {
 }
 
 function Header({className, hasSearch = true, hasCart = true}: Props) {
+    const searchParams = useSearchParams();
+
+    
+    const router = useRouter();
+    useEffect(() => {
+        if(searchParams.has('paid')){
+            setTimeout(() => {
+                toast.success("Заказ успешно оплачен");
+            }, 500);
+            router.back();
+        }
+    });
+
   return (
     <header className={cn('border border-b', className)}>
         <Container className='flex items-center justify-between py-8 '>
@@ -34,10 +51,7 @@ function Header({className, hasSearch = true, hasCart = true}: Props) {
                 </div>
             }
             <div className="flex  gap-4">
-                <Button variant={"outline"} className='flex items-center gap-1'>
-                    <User size={16}/>
-                    Войти
-                </Button>
+               <ProfileButton/>
                 {hasCart && 
                      <CartButton className='group relative'/>
 
