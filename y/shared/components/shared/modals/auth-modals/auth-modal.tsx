@@ -4,6 +4,7 @@ import { cn } from '@/shared/lib/utils';
 import { signIn } from 'next-auth/react';
 import React, { FC } from 'react'
 import LoginForm from './forms/login-form';
+import { RegisterForm } from './forms/register-form';
 
 interface Props {
     className?: string,
@@ -32,7 +33,7 @@ export const AuthModal:FC<Props> = ({className, open, onCLose}) => {
                 type === "login"?
                 <LoginForm onClose={handleClose}/>
                 :
-                <h1>Register</h1>
+                <RegisterForm/>
             }
 
             <hr />
