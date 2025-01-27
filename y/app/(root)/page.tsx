@@ -3,8 +3,7 @@ import Filters from "@/shared/components/shared/filters";
 import ProductsGroupList from "@/shared/components/shared/products-group-list";
 import { Title } from "@/shared/components/shared/title";
 import TopBar from "@/shared/components/shared/top-bar";
-import { prisma } from "@/prisma/prisma-client";
-import Link from "next/link";
+import Stories from "@/shared/components/shared/stories";
 import { Suspense, useEffect } from "react";
 import { findPizzas, GetSearchParams } from "@/shared/lib/find-pizzas";
 
@@ -18,6 +17,7 @@ export default async function Home({searchParams}: {searchParams: GetSearchParam
         <Title text = "Все пиццы" size="lg" className="font-extrabold"/>
       </Container>
       <TopBar categories={categories.filter((category) => category.products.length > 0)}/>
+        <Stories/>
       <Container className="mt-10">
         <div className="flex gap-[80px]">
             <div className="w-[250px]">

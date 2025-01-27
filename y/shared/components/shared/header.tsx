@@ -25,11 +25,19 @@ function Header({className, hasSearch = true, hasCart = true}: Props) {
     
     const router = useRouter();
     useEffect(() => {
+        let toastmessage = '';
         if(searchParams.has('paid')){
+            toastmessage = "Платеж успешно прошел!";
+        }
+        if(searchParams.has('verified')){
+            toastmessage = "Пользователь успешно верифицирован!";
+        }
+
+        if(toastmessage){
+            router.replace('/');
             setTimeout(() => {
                 toast.success("Заказ успешно оплачен");
             }, 500);
-            router.back();
         }
     });
 

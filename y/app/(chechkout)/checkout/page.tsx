@@ -12,7 +12,9 @@ import AddressForm from "@/shared/components/shared/checkout/address-form";
 import { checkoutFormSchema, CheckoutFormValues } from "@/shared/constants/checkout-form-schema";
 import { createOrder } from "@/app/actions";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { Api } from "@/shared/services/api-client";
 
 type Props = {}
 
@@ -20,7 +22,7 @@ type Props = {}
 function page({}: Props) {
   const {totalAmount,updateCartItemQuantity ,deleteItemFromCart , loading, items} = useCart();
   const [submitting, setSubmitting] = useState(false);
-
+  const {data: session} = useSession();
   const form = useForm({
     resolver: zodResolver(checkoutFormSchema),
     defaultValues: {
@@ -32,6 +34,22 @@ function page({}: Props) {
       comment: '',
     }
   });
+
+
+  useEffect(() => {
+    async function fetchUserInfo() {
+      const data = await Api.me.getMe();
+      const [firstName, lastName] = data.fullName.split(" ");
+      form.setValue("firstName", firstName);
+      form.setValue("lastName", lastName);
+      form.setValue("email", data.email);
+    }
+
+
+    if(session){
+      fetchUserInfo();
+    }
+  }, [session]);
 
 
   const onSubmit: SubmitHandler<CheckoutFormValues> = async(data: CheckoutFormValues ) => {
