@@ -6,7 +6,7 @@ interface ReturnProps{
     detailsItem: {id: number, quantity: number},
     isExist: boolean
 }
-export const  useCheckCartIsExist = async (
+export const  CheckCartIsExist = async (
     id: number, 
     data: CreateCartItemValues
 

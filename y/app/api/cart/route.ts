@@ -1,12 +1,10 @@
 import { prisma } from '@/prisma/prisma-client';
-import Cookies from 'js-cookie';
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from "crypto";
 import { findOrCreate } from '@/shared/lib/find-or-create-cart';
-import { CartDTO, CreateCartItemValues } from '@/shared/services/DTO/cart.dto';
-import IngredientCard from '@/shared/components/shared/ingredient-card';
+import {CreateCartItemValues } from '@/shared/services/DTO/cart.dto';
 import { updateCartTotalAmount } from '@/shared/lib/update-cart-total-amout';
-import { useCheckCartIsExist } from '@/shared/hooks/use-check-cart-exist';
+import { CheckCartIsExist } from '@/shared/hooks/use-check-cart-exist';
 export async function GET(req: NextRequest) {
   try {
     const token = req.cookies.get("token")?.value;
@@ -59,7 +57,7 @@ export async function POST(req: NextRequest) {
         const userCart = await findOrCreate(token);
 
         const data = (await req.json()) as CreateCartItemValues;
-        const {isExist, detailsItem} = await useCheckCartIsExist(userCart.id, data).then(r => r);
+        const {isExist, detailsItem} = await CheckCartIsExist(userCart.id, data).then(r => r);
 
         if(isExist){
             await prisma.cartItem.update({

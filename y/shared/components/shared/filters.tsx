@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Title } from './title'
 import { Input } from '../ui'
 import { RangeSlider } from './range-slider'
@@ -8,14 +8,12 @@ import CheckboxFilterGroup from './checkbox-filter-group'
 import { useFIlters } from '@/shared/hooks/use-filters'
 import { useIngredients } from '@/shared/hooks/use-ingredients'
 import { useQueryFilters } from '@/shared/hooks/use-query-filter'
-import { cookies } from 'next/headers'
-
-type Props = {}
 
 
 
 
-function Filters({}: Props) {
+
+function Filters() {
   const {togglePizzaTypes, pizzaTypes, togleSizes, sizes, price, updatePrice, filters, router, selectedIngredients, toggleIngredients, setPrice} = useFIlters();
   const {ingredients, loading, defaultItem} = useIngredients();
   const items = ingredients.map((item) => ({ value: String(item.id), text: item.name }));
