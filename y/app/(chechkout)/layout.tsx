@@ -1,6 +1,6 @@
 import Header from '@/shared/components/shared/header';
 import { Metadata } from 'next';
-import React from 'react'
+import React, { Suspense } from 'react'
 
 type Props = {
     children: React.ReactNode
@@ -17,7 +17,9 @@ function CheckoutLayout({
 }: Props) {
   return (
     <div className="min-h-screen bg-[#f4f1ee]">
-        <Header hasCart = {false} hasSearch = {false} className="border-gray-200"/>
+      <Suspense>
+       <Header hasCart = {false} hasSearch = {false} className="border-gray-200"/>
+      </Suspense>
             {children}
     </div>
   )

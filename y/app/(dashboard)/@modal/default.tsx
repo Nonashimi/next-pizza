@@ -1,8 +1,7 @@
 import React from 'react'
 
-type Props = {}
 
-function Default({}: Props) {
+function Default() {
   return (
     <div className='text-red-950 font-extrabold text-[30px]'>Default</div>
   )

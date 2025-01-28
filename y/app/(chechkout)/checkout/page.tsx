@@ -16,10 +16,9 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { Api } from "@/shared/services/api-client";
 
-type Props = {}
 
 
-function page({}: Props) {
+function page() {
   const {totalAmount,updateCartItemQuantity ,deleteItemFromCart , loading, items} = useCart();
   const [submitting, setSubmitting] = useState(false);
   const {data: session} = useSession();

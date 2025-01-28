@@ -1,9 +1,8 @@
 import Link from 'next/link'
 import React from 'react'
 
-type Props = {}
 
-function page({}: Props) {
+function page() {
   return (
     <h2 className=''>Dashboard page
     <br />

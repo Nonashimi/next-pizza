@@ -1,14 +1,12 @@
 
 import { prisma } from '@/prisma/prisma-client'
-import Container from '@/shared/components/shared/container'
 import { ProfileForm } from '@/shared/components/shared/profile-form'
 import { getUserSession } from '@/shared/lib/get-user-session'
 import { redirect } from 'next/navigation'
 import React from 'react'
 
-type Props = {}
 
- async function ProfilePage({}: Props) {
+ async function ProfilePage() {
     const session = await getUserSession();
     if(!session){
         return redirect('/not-auth');
