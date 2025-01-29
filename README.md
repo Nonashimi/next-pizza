@@ -4,15 +4,15 @@
 Next Pizza — это современный веб-приложение для онлайн-заказа пиццы, разработанное с использованием Next.js. Проект включает в себя систему выбора пиццы, корзину для покупок, оформление заказов и интеграцию с базой данных. Это простой и удобный способ заказать пиццу с любого устройства.
 
 #Основные технологии:
-Next.js — фреймворк для создания серверных React-приложений.
-React — библиотека для создания пользовательских интерфейсов.
-TypeScript — язык программирования, расширяющий JavaScript с типами.
-TailwindCSS — утилитарный CSS-фреймворк для быстрого создания интерфейсов.
-Prisma — ORM для работы с базами данных.
-NextAuth.js — библиотека для аутентификации в Next.js.
-Zustand — библиотека для управления состоянием приложения.
-Radix UI — коллекция компонентов интерфейса для React.
-Axios — библиотека для HTTP-запросов.
+- Next.js — фреймворк для создания серверных React-приложений.
+- React — библиотека для создания пользовательских интерфейсов.
+- TypeScript — язык программирования, расширяющий JavaScript с типами.
+- TailwindCSS — утилитарный CSS-фреймворк для быстрого создания интерфейсов.
+- Prisma — ORM для работы с базами данных.
+- NextAuth.js — библиотека для аутентификации в Next.js.
+- Zustand — библиотека для управления состоянием приложения.
+- Radix UI — коллекция компонентов интерфейса для React.
+- Axios — библиотека для HTTP-запросов.
 
 ## Установка
 
@@ -24,13 +24,13 @@ cd next-pizza
 3. Установите зависимости:
 npm install
 4. Создайте файл .env в корне проекта и добавьте необходимые переменные окружения:
-DATABASE_URL=your-database-url
-DATABASE_URL_UNPOOLED=your-database-unpooled
-POSTGRES_URL=your-postgre-url
-NEXT_AUTH_URL=nextAuth_url
-YOOKASSA_ENVS=yookassa_envs
-GitHub_Id=your-github-id
-GOOGLE_ID=your-google-id
+- DATABASE_URL=your-database-url
+- DATABASE_URL_UNPOOLED=your-database-unpooled
+- POSTGRES_URL=your-postgre-url
+- NEXT_AUTH_URL=nextAuth_url
+- YOOKASSA_ENVS=yookassa_envs
+- GitHub_Id=your-github-id
+- GOOGLE_ID=your-google-id
 
 
 5. Запустите проект:
