@@ -10,7 +10,6 @@ import SeacrhInput from './search-input'
 import CartButton from './cart-button'
 import { useRouter, useSearchParams } from 'next/navigation'
 import toast from 'react-hot-toast'
-import { useSession, signIn } from 'next-auth/react'
 import ProfileButton from './profile-button'
 import { AuthModal } from './modals/auth-modals'
 type Props = {
@@ -39,7 +38,7 @@ function Header({className, hasSearch = true, hasCart = true}: Props) {
                 toast.success("Заказ успешно оплачен");
             }, 500);
         }
-    });
+    }, []);
 
   return (
     <header className={cn('border border-b', className)}>

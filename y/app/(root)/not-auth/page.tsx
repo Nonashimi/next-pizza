@@ -1,5 +1,4 @@
 import { InfoBlock } from "@/shared/components/shared/info-block";
-import lock from "@/public/images/lock.png";
 export default function UnauthorizedPage() {
   return (
     <div className="flex flex-col items-center justify-center mt-40">

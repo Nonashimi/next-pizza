@@ -4,7 +4,7 @@ import ProductsGroupList from "@/shared/components/shared/products-group-list";
 import { Title } from "@/shared/components/shared/title";
 import TopBar from "@/shared/components/shared/top-bar";
 import Stories from "@/shared/components/shared/stories";
-import { Suspense, useEffect } from "react";
+import { Suspense } from "react";
 import { findPizzas, GetSearchParams } from "@/shared/lib/find-pizzas";
 
 export default async function Home({searchParams}: {searchParams: GetSearchParams}) {

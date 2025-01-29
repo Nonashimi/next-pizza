@@ -1,6 +1,6 @@
 "use client"
 
-import React, { FC, PropsWithChildren, useEffect, useState } from 'react'
+import React, { FC, PropsWithChildren, useState } from 'react'
 
 import {
     Sheet,

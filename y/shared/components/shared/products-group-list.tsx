@@ -6,8 +6,6 @@ import { cn } from '@/shared/lib/utils'
 import {useIntersection} from "react-use"
 import ProductCard from './product-card'
 import { useCategoryState } from '@/shared/store/category'
-import { products } from '@/prisma/constants'
-import { Product } from '@prisma/client'
 import { ProductWithRelations } from '@/@types/prisma'
 
 type Props = {
