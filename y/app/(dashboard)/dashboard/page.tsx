@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 
 
-function page() {
+function Page() {
   return (
     <h2 className=''>Dashboard page
     <br />
@@ -11,4 +11,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

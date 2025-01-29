@@ -9,7 +9,7 @@ type Props = {
     params: {id: string}
 }
 
-async function page({params}: Props) {
+async function Page({params}: Props) {
   const product = await prisma.product.findFirst({
     where: {id: Number(params.id)}, 
     include: {
@@ -38,4 +38,4 @@ async function page({params}: Props) {
   )
 }
 
-export default page
+export default Page

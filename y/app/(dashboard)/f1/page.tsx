@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-const page = () => {
+const Page = () => {
   return (
     <div>
         <div className="">F1 page</div>
@@ -12,4 +12,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

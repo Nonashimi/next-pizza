@@ -18,7 +18,7 @@ import { Api } from "@/shared/services/api-client";
 
 
 
-function page() {
+function Page() {
   const {totalAmount,updateCartItemQuantity ,deleteItemFromCart , loading, items} = useCart();
   const [submitting, setSubmitting] = useState(false);
   const {data: session} = useSession();
@@ -98,4 +98,4 @@ function page() {
   )
 }
 
-export default page
+export default Page
